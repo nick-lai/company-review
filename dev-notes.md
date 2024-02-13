@@ -25,3 +25,16 @@ sail composer require pestphp/pest-plugin-laravel --dev
 ```sh
 sail composer require pestphp/pest-plugin-faker --dev
 ```
+
+## 更新 npm dependencies
+
+```sh
+# 檢查更新
+sail npx npm-check-updates
+
+# 更新 package.json
+sail npx npm-check-updates -u
+
+# 安裝 dependencies 及初始化 package-lock.json
+sail npm install
+```
