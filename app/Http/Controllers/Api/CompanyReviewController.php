@@ -24,6 +24,8 @@ class CompanyReviewController extends Controller
             'index',
             'show',
         ]);
+
+        $this->authorizeResource(Review::class, 'review');
     }
 
     /**

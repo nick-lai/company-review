@@ -23,6 +23,8 @@ class ReviewController extends Controller
             'index',
             'show',
         ]);
+
+        $this->authorizeResource(Review::class, 'review');
     }
 
     /**
