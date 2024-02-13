@@ -19,3 +19,9 @@ sail composer require pestphp/pest --dev --with-all-dependencies
 ```sh
 sail composer require pestphp/pest-plugin-laravel --dev
 ```
+
+## 安裝 `pestphp/pest-plugin-faker`
+
+```sh
+sail composer require pestphp/pest-plugin-faker --dev
+```
