@@ -4,17 +4,32 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CompanyResource;
+use App\Http\Traits\CanLoadRelationships;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    use CanLoadRelationships;
+
+    protected array $allowedRelations = [
+        'reviews',
+        'reviews.company',
+        'reviews.user',
+    ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return CompanyResource::collection(Company::paginate());
+        $query = Company::query();
+
+        $this->loadRelationships($query);
+
+        return CompanyResource::collection(
+            $query->paginate()
+        );
     }
 
     /**
@@ -30,6 +45,8 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+        $this->loadRelationships($company);
+
         return CompanyResource::make($company);
     }
 

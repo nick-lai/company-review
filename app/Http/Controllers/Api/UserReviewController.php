@@ -4,18 +4,28 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
+use App\Http\Traits\CanLoadRelationships;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserReviewController extends Controller
 {
+    use CanLoadRelationships;
+
+    protected array $allowedRelations = [
+        'company',
+        'user',
+    ];
+
     /**
      * Display a listing of the resource.
      */
     public function index(User $user)
     {
         $reviews = $user->reviews();
+
+        $this->loadRelationships($reviews);
 
         return ReviewResource::collection(
             $reviews->latest()->paginate()
@@ -35,6 +45,8 @@ class UserReviewController extends Controller
      */
     public function show(User $user, Review $review)
     {
+        $this->loadRelationships($review);
+
         return ReviewResource::make($review);
     }
 
@@ -50,9 +62,13 @@ class UserReviewController extends Controller
             ])
         );
 
-        return $result
-            ? ReviewResource::make($review)
-            : response(status: 500);
+        if (!$result) {
+            return response(status: 500);
+        }
+
+        $this->loadRelationships($review);
+
+        return ReviewResource::make($review);
     }
 
     /**

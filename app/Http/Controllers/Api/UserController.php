@@ -4,17 +4,32 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Http\Traits\CanLoadRelationships;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use CanLoadRelationships;
+
+    protected array $allowedRelations = [
+        'reviews',
+        'reviews.company',
+        'reviews.user',
+    ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return UserResource::collection(User::paginate());
+        $query = User::query();
+
+        $this->loadRelationships($query);
+
+        return UserResource::collection(
+            $query->paginate()
+        );
     }
 
     /**
@@ -30,6 +45,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->loadRelationships($user);
+
         return UserResource::make($user);
     }
 
