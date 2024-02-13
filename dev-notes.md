@@ -59,3 +59,14 @@ sail artisan make:controller Api/CompanyController --api --model=Company --pest
 # 建立 Company resource
 sail artisan make:resource CompanyResource
 ```
+
+## 建立 User seeder, API controller, resource 與 Pest tests
+
+```sh
+# 建立 User seeder
+sail artisan make:seeder UserSeeder
+# 建立 User API controller, Pest test
+sail artisan make:controller Api/UserController --api --model=User --pest
+# 建立 User resource
+sail artisan make:resource UserResource
+```
