@@ -70,3 +70,16 @@ sail artisan make:controller Api/UserController --api --model=User --pest
 # 建立 User resource
 sail artisan make:resource UserResource
 ```
+
+## 建立 Review model, migration, factory, seeder, policy, API controller, resource 與 Pest tests
+
+```sh
+# 建立 Review model, migration, factory, seeder, policy, Pest test
+sail artisan make:model Review -mfs --policy --pest
+# 建立 Review API controller, Pest test
+sail artisan make:controller Api/CompanyReviewController --api --model=Review --parent=Company --pest
+sail artisan make:controller Api/UserReviewController --api --model=Review --parent=User --pest
+sail artisan make:controller Api/ReviewController --api --model=Review --pest
+# 建立 Review resource
+sail artisan make:resource ReviewResource
+```
