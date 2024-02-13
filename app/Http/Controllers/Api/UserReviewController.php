@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +15,11 @@ class UserReviewController extends Controller
      */
     public function index(User $user)
     {
-        //
+        $reviews = $user->reviews();
+
+        return ReviewResource::collection(
+            $reviews->latest()->paginate()
+        );
     }
 
     /**
@@ -30,7 +35,7 @@ class UserReviewController extends Controller
      */
     public function show(User $user, Review $review)
     {
-        //
+        return ReviewResource::make($review);
     }
 
     /**
@@ -38,7 +43,16 @@ class UserReviewController extends Controller
      */
     public function update(Request $request, User $user, Review $review)
     {
-        //
+        $result = $review->update(
+            $request->validate([
+                'review' => 'required',
+                'rating'=> 'required|min:1|max:10|integer',
+            ])
+        );
+
+        return $result
+            ? ReviewResource::make($review)
+            : response(status: 500);
     }
 
     /**
@@ -46,6 +60,6 @@ class UserReviewController extends Controller
      */
     public function destroy(User $user, Review $review)
     {
-        //
+        return response(status: $review->delete() ? 204 : 500);
     }
 }

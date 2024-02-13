@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReviewResource;
 use App\Models\Company;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -14,7 +15,11 @@ class CompanyReviewController extends Controller
      */
     public function index(Company $company)
     {
-        //
+        $reviews = $company->reviews();
+
+        return ReviewResource::collection(
+            $reviews->latest()->paginate()
+        );
     }
 
     /**
@@ -22,7 +27,15 @@ class CompanyReviewController extends Controller
      */
     public function store(Request $request, Company $company)
     {
-        //
+        $review = $company->reviews()->create([
+            ...$request->validate([
+                'review' => 'required',
+                'rating'=> 'required|min:1|max:10|integer',
+            ]),
+            'user_id' => 1,
+        ]);
+
+        return ReviewResource::make($review);
     }
 
     /**
@@ -30,7 +43,7 @@ class CompanyReviewController extends Controller
      */
     public function show(Company $company, Review $review)
     {
-        //
+        return ReviewResource::make($review);
     }
 
     /**
@@ -38,7 +51,16 @@ class CompanyReviewController extends Controller
      */
     public function update(Request $request, Company $company, Review $review)
     {
-        //
+        $result = $review->update(
+            $request->validate([
+                'review' => 'required',
+                'rating'=> 'required|min:1|max:10|integer',
+            ])
+        );
+
+        return $result
+            ? ReviewResource::make($review)
+            : response(status: 500);
     }
 
     /**
@@ -46,6 +68,6 @@ class CompanyReviewController extends Controller
      */
     public function destroy(Company $company, Review $review)
     {
-        //
+        return response(status: $review->delete() ? 204 : 500);
     }
 }

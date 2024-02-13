@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\CompanyReviewController;
+use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\UserReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +22,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('companies', CompanyController::class)
+    ->missing(fn() => response(status: 404));
+Route::apiResource('companies.reviews', CompanyReviewController::class)
+    ->missing(fn() => response(status: 404));
+
+Route::apiResource('users', UserController::class)
+    ->missing(fn() => response(status: 404));
+Route::apiResource('users.reviews', UserReviewController::class)
+    ->missing(fn() => response(status: 404));
+
+Route::apiResource('reviews', ReviewController::class)
+    ->missing(fn() => response(status: 404));
