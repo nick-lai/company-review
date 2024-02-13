@@ -89,3 +89,10 @@ sail artisan make:resource ReviewResource
 ```sh
 sail artisan migrate:refresh --seed
 ```
+
+## 身分認證
+
+```sh
+sail artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+sail artisan make:controller Api/AuthController
+```

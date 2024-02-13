@@ -18,6 +18,14 @@ class CompanyReviewController extends Controller
         'user',
     ];
 
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except([
+            'index',
+            'show',
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,7 +50,7 @@ class CompanyReviewController extends Controller
                 'review' => 'required',
                 'rating'=> 'required|min:1|max:10|integer',
             ]),
-            'user_id' => 1,
+            'user_id' => $request->user()->id,
         ]);
 
         $this->loadRelationships($review);
