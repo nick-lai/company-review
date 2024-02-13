@@ -48,3 +48,14 @@ sail npm install -D tailwindcss postcss autoprefixer
 # 初始化 Tailwind CSS 設定檔
 sail npx tailwindcss init -p
 ```
+
+## 建立 Company model, migration, factory, seeder, policy, API controller, resource 與 Pest tests
+
+```sh
+# 建立 Company model, migration, factory, seeder, policy, Pest test
+sail artisan make:model Company -mfs --policy --pest
+# 建立 Company API controller, Pest test
+sail artisan make:controller Api/CompanyController --api --model=Company --pest
+# 建立 Company resource
+sail artisan make:resource CompanyResource
+```
