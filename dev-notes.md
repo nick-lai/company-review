@@ -83,3 +83,9 @@ sail artisan make:controller Api/ReviewController --api --model=Review --pest
 # 建立 Review resource
 sail artisan make:resource ReviewResource
 ```
+
+## 重新執行所有 database migrations 並產生假資料
+
+```sh
+sail artisan migrate:refresh --seed
+```

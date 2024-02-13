@@ -17,7 +17,14 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->unique()->company,
+            'address' => fake()->address,
+            'phone_number' => fake()->phoneNumber,
+            'owner' => fake()->unique()->name,
+            'created_at' => fake()->dateTimeBetween('-2 years'),
+            'updated_at' => function (array $attributes) {
+                return fake()->dateTimeBetween($attributes['created_at']);
+            },
         ];
     }
 }
