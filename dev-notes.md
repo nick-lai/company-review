@@ -38,3 +38,13 @@ sail npx npm-check-updates -u
 # 安裝 dependencies 及初始化 package-lock.json
 sail npm install
 ```
+
+## 安裝 Tailwind CSS 並初始化設定檔
+
+```sh
+# 安裝 Tailwind CSS
+sail npm install -D tailwindcss postcss autoprefixer
+
+# 初始化 Tailwind CSS 設定檔
+sail npx tailwindcss init -p
+```
