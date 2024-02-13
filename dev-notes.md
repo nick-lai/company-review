@@ -7,3 +7,9 @@
 ```sh
 curl -s "https://laravel.build/company-review?with=mysql,redis,meilisearch,mailpit" | bash
 ```
+
+## 安裝 `pestphp/pest`
+
+```sh
+sail composer require pestphp/pest --dev --with-all-dependencies
+```
