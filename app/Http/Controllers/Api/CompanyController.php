@@ -21,9 +21,28 @@ class CompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query = Company::query();
+        $name = $request->input('name');
+        $sortBy = $request->input('sort_by', '');
+
+        $query = Company::query()
+            ->withReviewsCount()
+            ->withAvgRating();
+
+        if (isset($name[0])) {
+            $query->name($name);
+        }
+
+        match ($sortBy) {
+            'name_asc' => $query->orderBy('name', 'ASC'),
+            'name_desc' => $query->orderBy('name', 'DESC'),
+            'latest_reviewed' => $query->latestReviewed(),
+            'oldest_reviewed' => $query->oldestReviewed(),
+            'highest_rated' => $query->highestRated(),
+            'lowest_rated' => $query->lowestRated(),
+            default => $query->latest(),
+        };
 
         $this->loadRelationships($query);
 
