@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 'Hello, world!';
+    return redirect()->route('companies.index');
 });
+
+Route::resource('companies', CompanyController::class);
+Route::resource('companies.reviews', CompanyReviewController::class);

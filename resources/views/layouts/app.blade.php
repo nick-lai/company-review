@@ -10,7 +10,9 @@
 </head>
 
 <body>
-    @yield('content')
+    <div class="container mx-auto my-10 max-w-3xl">
+        @yield('content')
+    </div>
 </body>
 
 </html>

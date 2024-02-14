@@ -96,3 +96,16 @@ sail artisan migrate:refresh --seed
 sail artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 sail artisan make:controller Api/AuthController
 ```
+
+## 建立 CompanyController, CompanyReviewController
+
+```sh
+sail artisan make:controller CompanyController --resource --model=Company --pest
+sail artisan make:controller CompanyReviewController --resource --model=Review --parent=Company --pest
+```
+
+## 建立 StartRating component
+
+```sh
+sail artisan make:component StartRating --pest
+```
