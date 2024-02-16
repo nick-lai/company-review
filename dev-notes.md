@@ -116,3 +116,9 @@ sail artisan make:component StartRating --pest
 sail npm install --save-dev @iconify/tailwind
 sail npm install --save-dev @iconify-json/ion
 ```
+
+## publish laravel-pagination
+
+```sh
+sail artisan vendor:publish --tag=laravel-pagination
+```
