@@ -109,3 +109,10 @@ sail artisan make:controller CompanyReviewController --resource --model=Review -
 ```sh
 sail artisan make:component StartRating --pest
 ```
+
+## 安裝 `@iconify/tailwind` 與 `@iconify-json/ion`
+
+```sh
+sail npm install --save-dev @iconify/tailwind
+sail npm install --save-dev @iconify-json/ion
+```

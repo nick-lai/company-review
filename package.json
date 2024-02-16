@@ -6,6 +6,8 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@iconify-json/ion": "^1.1.15",
+        "@iconify/tailwind": "^0.1.4",
         "autoprefixer": "^10.4.17",
         "axios": "^1.6.7",
         "laravel-vite-plugin": "^1.0.1",
