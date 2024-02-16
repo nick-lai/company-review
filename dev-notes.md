@@ -122,3 +122,9 @@ sail npm install --save-dev @iconify-json/ion
 ```sh
 sail artisan vendor:publish --tag=laravel-pagination
 ```
+
+### 安裝 `alpinejs`
+
+```sh
+sail npm install alpinejs
+```

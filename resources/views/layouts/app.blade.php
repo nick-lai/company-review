@@ -13,6 +13,8 @@
     <div class="container mx-auto my-10 max-w-3xl">
         @yield('content')
     </div>
+
+    @vite(['resources/js/app.js'])
 </body>
 
 </html>
