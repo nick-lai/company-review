@@ -37,17 +37,16 @@ class CompanyReviewController extends Controller
      */
     public function store(Request $request, Company $company)
     {
-        $review = $company->reviews()->create([
+        $company->reviews()->create([
             ...$request->validate([
                 'review' => 'required',
                 'rating'=> 'required|min:1|max:10|integer',
             ]),
-            'user_id' => $request->user()->id,
+            'user_id' => $request?->user()?->id ?? 1,
         ]);
 
-        $this->loadRelationships($review);
-
-        return redirect()->route('companies.show', $company);
+        return redirect()->route('companies.show', $company)
+            ->with('success', '新增成功!');
     }
 
     /**
@@ -63,7 +62,10 @@ class CompanyReviewController extends Controller
      */
     public function edit(Company $company, Review $review)
     {
-        //
+        return view('companies.reviews.edit', [
+            'company' => $company,
+            'review' => $review,
+        ]);
     }
 
     /**
@@ -71,7 +73,20 @@ class CompanyReviewController extends Controller
      */
     public function update(Request $request, Company $company, Review $review)
     {
-        //
+        $result = $review->update(
+            $request->validate([
+                'review' => 'required',
+                'rating'=> 'required|min:1|max:10|integer',
+            ])
+        );
+
+        if (!$result) {
+            return redirect()->route('companies.show', $company)
+                ->with('fail', '修改失敗!');
+        }
+
+        return redirect()->route('companies.show', $company)
+            ->with('success', '修改成功!');
     }
 
     /**
@@ -79,6 +94,9 @@ class CompanyReviewController extends Controller
      */
     public function destroy(Company $company, Review $review)
     {
-        //
+        $review->delete();
+
+        return redirect()->route('companies.show', $company)
+            ->with('success', '刪除成功!');
     }
 }

@@ -22,7 +22,7 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $name = $request->input('name');
-        $filter = $request->input('filter', '');
+        $sortBy = $request->input('sort_by', '');
 
         $query = Company::query()
             ->withReviewsCount()
@@ -32,7 +32,7 @@ class CompanyController extends Controller
             $query->name($name);
         }
 
-        match ($filter) {
+        match ($sortBy) {
             'name_asc' => $query->orderBy('name', 'ASC'),
             'name_desc' => $query->orderBy('name', 'DESC'),
             'latest_reviewed' => $query->latestReviewed(),
@@ -44,7 +44,7 @@ class CompanyController extends Controller
 
         $this->loadRelationships($query);
 
-        return view('companies.index', ['companies' => $query->paginate()]);
+        return view('companies.index', ['companies' => $query->paginate(10)]);
     }
 
     /**
@@ -66,9 +66,17 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(int $id)
     {
-        return view('companies.show', ['company' => $company]);
+        $company = Company::query()
+            ->withReviewsCount()
+            ->withAvgRating()
+            ->findOrFail($id);
+
+        return view('companies.show', [
+            'company' => $company,
+            'reviews' => $company->reviews()->latest()->paginate(10),
+        ]);
     }
 
     /**

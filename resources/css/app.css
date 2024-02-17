@@ -55,4 +55,12 @@
   .reset-link {
     @apply text-slate-500 underline;
   }
+
+  .hover-underline {
+    @apply hover:underline hover:decoration-2 hover:underline-offset-4 hover:cursor-pointer;
+  }
+
+  .error {
+    @apply text-red-500 text-sm;
+  }
 }
